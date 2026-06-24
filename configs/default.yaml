@@ -1,0 +1,18 @@
+# Default run configuration. Override any field here.
+data_dir: /kaggle/input/flickr8k
+n_test: 1000
+seed: 42
+smoke_test: true
+smoke_n: 100
+
+model_key: best        # fast | b16 | best | max  (biggest lever on score)
+index_kind: flat_ip    # flat_ip | ivf_flat | hnsw
+reranker: blip_itm     # identity | clip_rescore | blip_itm
+rerank_depth: 50
+rerank_subsample: 500
+
+img_batch: 64
+txt_batch: 256
+ks: [1, 5, 10]
+n_boot: 1000
+out_dir: /kaggle/working
