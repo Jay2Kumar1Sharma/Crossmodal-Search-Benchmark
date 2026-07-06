@@ -86,7 +86,18 @@ Zero-shot **stage-1 CLIP** (LAION ViT-L/14) on the Flickr8k 1,000-image held-out
 | **Text → Image** | 71.08 [69.8, 72.3] | 90.54 [89.7, 91.3] | 95.08 [94.5, 95.7] | 0.80 | 83.26 [82.5, 84.0] | — |
 | **Image → Text** | 83.60 [81.3, 85.9] | 95.90 [94.7, 97.0] | 98.40 [97.6, 99.2] | 0.89 | 78.73 [77.2, 80.3] | 73.21 [71.7, 74.8] |
 
-The two-stage BLIP reranker and LoRA fine-tuning results (with paired bootstrap significance test on R@1) are reported in the notebook after a full end-to-end run.
+### LoRA fine-tuning ablation
+
+PEFT/LoRA (r=8, α=16, adapters on `q_proj`/`k_proj`/`v_proj`/`out_proj` of both towers, <1% of parameters trainable) trained for 3 epochs with a symmetric InfoNCE contrastive loss on the same train split. Run on `openai/clip-vit-base-patch32` (a smaller/faster backbone than the ViT-L/14 baseline above) as a controlled zero-shot-vs-fine-tuned ablation — full numbers in `results/summary.json`, trained adapter in `results/lora_adapter/`.
+
+| Direction | Zero-shot R@1 | +LoRA R@1 | Δ (95% CI) | Significant |
+|---|---|---|---|---|
+| **Text → Image** | 55.04 | 66.52 | +11.48 [10.4, 12.6] | ✅ |
+| **Image → Text** | 70.90 | 80.60 | +9.70 [7.2, 12.2] | ✅ |
+
+Gains hold across R@5/R@10/MRR/nDCG/mAP as well (e.g. Text→Image nDCG@10: 71.22 → 80.72). Both R@1 deltas exclude 0 under a paired bootstrap test on the same queries, so the improvement isn't noise.
+
+The two-stage BLIP reranker results (with paired bootstrap significance test on R@1) are reported in the notebook after a full end-to-end run.
 
 ![Recall@K curves across index types](assets/screenshots/recall_curves.png)
 *R@1 / R@5 / R@10 across FlatIP, IVFFlat, and HNSW indexes — exact results from the index study in the notebook.*
@@ -178,7 +189,10 @@ clip-faiss-retrieval/
 ├── notebooks/
 │   └── clip_retrieval_kaggle.ipynb   # end-to-end notebook (Kaggle-ready)
 ├── results/
-│   └── metrics_baseline.csv    # baseline evaluation output
+│   ├── metrics_baseline.csv    # baseline evaluation output
+│   ├── summary.json            # run config + baseline + LoRA ablation metrics
+│   ├── qualitative_examples.png
+│   └── lora_adapter/           # trained PEFT/LoRA adapter
 └── requirements.txt
 ```
 
@@ -217,7 +231,7 @@ Prevents a caption and its sibling captions from straddling the train/test bound
 
 ## Roadmap
 
-- LoRA / full fine-tuning of CLIP on in-domain pairs
+- LoRA fine-tuning on the larger ViT-L/14 backbone (currently ablated on ViT-B/32 only)
 - Ensemble bi-encoders
 - Larger cross-encoder reranker (BLIP-2)
 - Approximate index (IVF-PQ) for million-scale galleries

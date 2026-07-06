@@ -1,0 +1,224 @@
+{
+  "config": {
+    "data_dir": "/kaggle/input/datasets/adityajn105/flickr8k",
+    "n_test": 1000,
+    "seed": 42,
+    "smoke_test": false,
+    "smoke_n": 100,
+    "model_key": "best",
+    "index_kind": "flat_ip",
+    "reranker": "blip_itm",
+    "rerank_depth": 50,
+    "rerank_subsample": 500,
+    "img_batch": 64,
+    "txt_batch": 256,
+    "ks": [
+      1,
+      5,
+      10
+    ],
+    "n_boot": 1000,
+    "out_dir": "/kaggle/working"
+  },
+  "baseline": {
+    "text_to_image": {
+      "R@1": {
+        "mean": 71.08,
+        "lo": 69.84,
+        "hi": 72.32
+      },
+      "R@5": {
+        "mean": 90.54,
+        "lo": 89.72,
+        "hi": 91.32
+      },
+      "R@10": {
+        "mean": 95.08,
+        "lo": 94.48,
+        "hi": 95.7
+      },
+      "MRR": {
+        "mean": 0.8,
+        "lo": 0.79,
+        "hi": 0.81
+      },
+      "nDCG@10": {
+        "mean": 83.26,
+        "lo": 82.48,
+        "hi": 84.04
+      }
+    },
+    "image_to_text": {
+      "R@1": {
+        "mean": 83.6,
+        "lo": 81.3,
+        "hi": 85.9
+      },
+      "R@5": {
+        "mean": 95.9,
+        "lo": 94.7,
+        "hi": 97.0
+      },
+      "R@10": {
+        "mean": 98.4,
+        "lo": 97.6,
+        "hi": 99.2
+      },
+      "MRR": {
+        "mean": 0.89,
+        "lo": 0.87,
+        "hi": 0.9
+      },
+      "nDCG@10": {
+        "mean": 78.73,
+        "lo": 77.25,
+        "hi": 80.3
+      },
+      "mAP": {
+        "mean": 73.21,
+        "lo": 71.65,
+        "hi": 74.82
+      }
+    }
+  },
+  "lora": {
+    "backbone": "fast",
+    "epochs": 3,
+    "zero_shot": {
+      "text_to_image": {
+        "R@1": {
+          "mean": 55.04,
+          "lo": 53.68,
+          "hi": 56.4
+        },
+        "R@5": {
+          "mean": 80.78,
+          "lo": 79.76,
+          "hi": 81.86
+        },
+        "R@10": {
+          "mean": 88.0,
+          "lo": 87.12,
+          "hi": 88.86
+        },
+        "MRR": {
+          "mean": 0.66,
+          "lo": 0.65,
+          "hi": 0.68
+        },
+        "nDCG@10": {
+          "mean": 71.22,
+          "lo": 70.26,
+          "hi": 72.19
+        }
+      },
+      "image_to_text": {
+        "R@1": {
+          "mean": 70.9,
+          "lo": 67.9,
+          "hi": 73.7
+        },
+        "R@5": {
+          "mean": 91.2,
+          "lo": 89.5,
+          "hi": 92.9
+        },
+        "R@10": {
+          "mean": 95.9,
+          "lo": 94.6,
+          "hi": 97.1
+        },
+        "MRR": {
+          "mean": 0.8,
+          "lo": 0.78,
+          "hi": 0.82
+        },
+        "nDCG@10": {
+          "mean": 64.93,
+          "lo": 63.2,
+          "hi": 66.66
+        },
+        "mAP": {
+          "mean": 58.01,
+          "lo": 56.26,
+          "hi": 59.72
+        }
+      }
+    },
+    "fine_tuned": {
+      "text_to_image": {
+        "R@1": {
+          "mean": 66.52,
+          "lo": 65.3,
+          "hi": 67.8
+        },
+        "R@5": {
+          "mean": 89.58,
+          "lo": 88.7,
+          "hi": 90.38
+        },
+        "R@10": {
+          "mean": 94.36,
+          "lo": 93.72,
+          "hi": 94.94
+        },
+        "MRR": {
+          "mean": 0.77,
+          "lo": 0.76,
+          "hi": 0.78
+        },
+        "nDCG@10": {
+          "mean": 80.72,
+          "lo": 79.92,
+          "hi": 81.5
+        }
+      },
+      "image_to_text": {
+        "R@1": {
+          "mean": 80.6,
+          "lo": 78.0,
+          "hi": 83.0
+        },
+        "R@5": {
+          "mean": 95.0,
+          "lo": 93.6,
+          "hi": 96.2
+        },
+        "R@10": {
+          "mean": 97.8,
+          "lo": 96.9,
+          "hi": 98.6
+        },
+        "MRR": {
+          "mean": 0.87,
+          "lo": 0.85,
+          "hi": 0.88
+        },
+        "nDCG@10": {
+          "mean": 75.94,
+          "lo": 74.28,
+          "hi": 77.62
+        },
+        "mAP": {
+          "mean": 70.35,
+          "lo": 68.62,
+          "hi": 72.0
+        }
+      }
+    },
+    "r1_delta": {
+      "T\u2192I": {
+        "delta": 11.48,
+        "lo": 10.38,
+        "hi": 12.62,
+        "significant": true
+      },
+      "I\u2192T": {
+        "delta": 9.7,
+        "lo": 7.2,
+        "hi": 12.2,
+        "significant": true
+      }
+    }
+  }
+}
